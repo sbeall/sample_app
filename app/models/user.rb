@@ -21,7 +21,14 @@ class User < ActiveRecord::Base
     user = find_by_email(email)
     return nil if user.nil?
     return user if user.has_password?(submitted_password)
-   end
+  end
+  
+  def self.authenicate_with_salt(id, cookie_salt)
+    user = find_by_id(id)
+    (user && user.salt == cookie_salt) ? user : nil
+  end
+  
+  
   private
   
     def encrypt_password
@@ -38,3 +45,4 @@ class User < ActiveRecord::Base
       Digest::SHA2.hexdigest(string)
     end
 end
+
