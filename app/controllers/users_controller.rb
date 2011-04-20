@@ -7,8 +7,8 @@ class UsersController < ApplicationController
     @title = @user.name
   end
   def new
-    @title = "Sign Up"
-    @user = User.new
+   @user = User.new
+   @title = "Sign up"
   end
   def create
     @user = User.new(params[:user])
@@ -59,7 +59,7 @@ class UsersController < ApplicationController
    deny_access unless signed_in?
   end
   
-  def correct_user
+  def current_user
     @user = User.find(params[:id])
     redirect_to(root_path) unless current_user?(@user)
   end
